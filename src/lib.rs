@@ -62,37 +62,31 @@ impl Universe {
     }
 
     pub fn tick(&mut self) {
-        let mut next = self.cells.clone();
-
         for row in 0..self.height {
             for col in 0..self.width {
                 let idx = self.get_index(row, col);
                 let cell = self.cells[idx];
                 let live_neighbors = self.live_neighbor_count(row, col);
 
-                next.set(
-                    idx,
-                    match (cell, live_neighbors) {
-                        // Rule 1: Any live cell with fewer than two live neighbors
-                        // dies, as if caused by underpopulation.
-                        (true, x) if x < 2 => false,
-                        // Rule 2: Any live cell with two or three live neighbors
-                        // lives on to the next generation.
-                        (true, 2) | (true, 3) => true,
-                        // Rule 3: Any live cell with more than three live
-                        // neighbors dies, as if by overpopulation.
-                        (true, x) if x > 3 => false,
-                        // Rule 4: Any dead cell with exactly three live neighbors
-                        // becomes a live cell, as if by reproduction.
-                        (false, 3) => true,
-                        // All other cells remain in the same state.
-                        (otherwise, _) => otherwise,
-                    },
-                );
+                let next = match (cell, live_neighbors) {
+                    // Rule 1: Any live cell with fewer than two live neighbors
+                    // dies, as if caused by underpopulation.
+                    (true, x) if x < 2 => false,
+                    // Rule 2: Any live cell with two or three live neighbors
+                    // lives on to the next generation.
+                    (true, 2) | (true, 3) => true,
+                    // Rule 3: Any live cell with more than three live
+                    // neighbors dies, as if by overpopulation.
+                    (true, x) if x > 3 => false,
+                    // Rule 4: Any dead cell with exactly three live neighbors
+                    // becomes a live cell, as if by reproduction.
+                    (false, 3) => true,
+                    // All other cells remain in the same state.
+                    (otherwise, _) => otherwise,
+                };
+                self.cells.set(idx, next);
             }
         }
-
-        self.cells = next;
     }
 
     fn get_index(&self, row: u32, column: u32) -> usize {
@@ -114,6 +108,38 @@ impl Universe {
             }
         }
         count
+    }
+
+    /// Set the width of the universe.
+    ///
+    /// Resets all cells to the dead state.
+    pub fn set_width(&mut self, width: u32) {
+        self.width = width;
+        self.cells.clear();
+    }
+
+    /// Set the height of the universe.
+    ///
+    /// Resets all cells to the dead state.
+    pub fn set_height(&mut self, height: u32) {
+        self.height = height;
+        self.cells.clear();
+    }
+}
+
+impl Universe {
+    /// Get the dead and alive value of the entire univese.
+    pub fn get_cells(&self) -> *const u32 {
+        self.cells.as_slice().as_ptr()
+    }
+
+    /// Set cells to be active in a universe by passing the row and column
+    /// of each cell as an array.
+    pub fn set_cells(&mut self, cells: &[(u32, u32)]) {
+        for (row, col) in cells.iter().cloned() {
+            let idx = self.get_index(row, col);
+            self.cells.set(idx, true);
+        }
     }
 }
 
