@@ -55,6 +55,12 @@
 /******/ 		"../pkg/conway_wasm_bg.wasm": function() {
 /******/ 			return {
 /******/ 				"./conway_wasm_bg.js": {
+/******/ 					"__wbindgen_object_drop_ref": function(p0i32) {
+/******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbindgen_object_drop_ref"](p0i32);
+/******/ 					},
+/******/ 					"__wbg_random_ca8b31dc0375c2d4": function() {
+/******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbg_random_ca8b31dc0375c2d4"]();
+/******/ 					},
 /******/ 					"__wbg_new_59cb74e423758ede": function() {
 /******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbg_new_59cb74e423758ede"]();
 /******/ 					},
@@ -63,9 +69,6 @@
 /******/ 					},
 /******/ 					"__wbg_error_4bb6c2a97407129a": function(p0i32,p1i32) {
 /******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbg_error_4bb6c2a97407129a"](p0i32,p1i32);
-/******/ 					},
-/******/ 					"__wbindgen_object_drop_ref": function(p0i32) {
-/******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbindgen_object_drop_ref"](p0i32);
 /******/ 					},
 /******/ 					"__wbindgen_throw": function(p0i32,p1i32) {
 /******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbindgen_throw"](p0i32,p1i32);
@@ -171,7 +174,7 @@
 /******/ 				promises.push(installedWasmModuleData);
 /******/ 			else {
 /******/ 				var importObject = wasmImportObjects[wasmModuleId]();
-/******/ 				var req = fetch(__webpack_require__.p + "" + {"../pkg/conway_wasm_bg.wasm":"c960881c151a97096d29"}[wasmModuleId] + ".module.wasm");
+/******/ 				var req = fetch(__webpack_require__.p + "" + {"../pkg/conway_wasm_bg.wasm":"364fbdadd669b4954d16"}[wasmModuleId] + ".module.wasm");
 /******/ 				var promise;
 /******/ 				if(importObject instanceof Promise && typeof WebAssembly.compileStreaming === 'function') {
 /******/ 					promise = Promise.all([WebAssembly.compileStreaming(req), importObject]).then(function(items) {
