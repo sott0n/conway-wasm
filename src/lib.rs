@@ -1,7 +1,9 @@
+mod timer;
 mod utils;
 
 use fixedbitset::FixedBitSet;
 use std::fmt;
+use timer::Timer;
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -9,13 +11,6 @@ use wasm_bindgen::prelude::*;
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
-// A macro to provide `println!(..)`-style sysntax for `console.log` logging.
-macro_rules! log {
-    ( $( $t:tt)* ) => {
-        web_sys::console::log_1(&format!( $( $t )* ).into());
-    }
-}
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -71,6 +66,7 @@ impl Universe {
     }
 
     pub fn tick(&mut self) {
+        let _timer = Timer::new("Universe::tick");
         for row in 0..self.height {
             for col in 0..self.width {
                 let idx = self.get_index(row, col);
@@ -105,18 +101,45 @@ impl Universe {
 
     fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
         let mut count = 0;
-        for delta_row in [self.height - 1, 0, 1].iter().cloned() {
-            for delta_col in [self.width - 1, 0, 1].iter().cloned() {
-                if delta_row == 0 && delta_col == 0 {
-                    continue;
-                }
+        let cells = &self.cells;
 
-                let neighbor_row = (row + delta_row) % self.height;
-                let neighbor_col = (column + delta_col) % self.width;
-                let idx = self.get_index(neighbor_row, neighbor_col);
-                count += self.cells[idx] as u8;
-            }
-        }
+        let north = if row == 0 { self.height - 1 } else { row - 1 };
+        let south = if row == self.height - 1 { 0 } else { row + 1 };
+        let west = if column == 0 {
+            self.width - 1
+        } else {
+            column - 1
+        };
+        let east = if column == self.width - 1 {
+            0
+        } else {
+            column + 1
+        };
+
+        let nw = self.get_index(north, west);
+        count += cells[nw] as u8;
+
+        let n = self.get_index(north, column);
+        count += cells[n] as u8;
+
+        let ne = self.get_index(north, east);
+        count += cells[ne] as u8;
+
+        let w = self.get_index(row, west);
+        count += cells[w] as u8;
+
+        let e = self.get_index(row, east);
+        count += cells[e] as u8;
+
+        let sw = self.get_index(south, west);
+        count += cells[sw] as u8;
+
+        let s = self.get_index(south, column);
+        count += cells[s] as u8;
+
+        let se = self.get_index(south, east);
+        count += cells[se] as u8;
+
         count
     }
 

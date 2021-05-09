@@ -8,8 +8,6 @@ use wasm_bindgen_test::*;
 extern crate conway_wasm;
 use conway_wasm::Universe;
 
-use fixedbitset::FixedBitSet;
-
 wasm_bindgen_test_configure!(run_in_browser);
 
 #[cfg(test)]
@@ -37,7 +35,7 @@ pub fn test_tick() {
 
     // This is what our spaceship should look like
     // after one tick in our universe.
-    let mut expected_universe = expected_spaceship();
+    let expected_universe = expected_spaceship();
 
     // Call `tick` and then see if the cells in the `Universe`s are the same.
     input_universe.tick();
