@@ -77,14 +77,6 @@ impl Universe {
                 let cell = self.cells[idx];
                 let live_neighbors = self.live_neighbor_count(row, col);
 
-                log!(
-                    "cell[{}, {}] is initially {:?} and has {} live neighbors",
-                    row,
-                    col,
-                    cell,
-                    live_neighbors
-                );
-
                 let next = match (cell, live_neighbors) {
                     // Rule 1: Any live cell with fewer than two live neighbors
                     // dies, as if caused by underpopulation.
@@ -102,7 +94,6 @@ impl Universe {
                     (otherwise, _) => otherwise,
                 };
 
-                log!("    it becomes {:?}", next);
                 self.cells.set(idx, next);
             }
         }
@@ -143,6 +134,11 @@ impl Universe {
     pub fn set_height(&mut self, height: u32) {
         self.height = height;
         self.cells.clear();
+    }
+
+    pub fn toggle_cell(&mut self, row: u32, column: u32) {
+        let idx = self.get_index(row, column);
+        self.cells.set(idx, !self.cells[idx]);
     }
 }
 

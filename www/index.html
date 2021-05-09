@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Hello, Conway game of life!</title>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
       body {
         position: absolute;
@@ -16,11 +16,22 @@
         align-items: center;
         justify-content: center;
       }
+      .inline{
+          display: inline-block;
+          margin: 5px;
+      }
     </style>
 
   </head>
   <body>
-    <button id="play-pause"></button>
+    <h2>Play a Conway, game of life!!</h2>
+    This famous game is written by wasm.
+    <br>
+    <br>
+    <div class="inline">
+        <button id="play-pause" type="button" class="btn btn-sm btn-info">Start</button>
+        <button id="reset" type="button" class="btn btn-sm btn-dark">Reset</button>
+    </div>
     <canvas id="game-of-life-canvas"></canvas>
     <script src="./bootstrap.js"></script>
   </body>

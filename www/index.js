@@ -7,7 +7,7 @@ const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
 
-const universe = Universe.new();
+let universe = Universe.new();
 const width = universe.width();
 const height = universe.height();
 
@@ -89,12 +89,12 @@ const isPaused = () => {
 const playPauseButton = document.getElementById("play-pause");
 
 const play = () => {
-    playPauseButton.textContent = "⏸";
+    playPauseButton.textContent = "Stop";
     renderLoop();
 };
 
 const pause = () => {
-    playPauseButton.textContent = "▶";
+    playPauseButton.textContent = "Start";
     cancelAnimationFrame(animationId);
     animationId = null;
 };
@@ -107,4 +107,35 @@ playPauseButton.addEventListener("click", event => {
     }
 });
 
-play();
+const resetButton = document.getElementById("reset");
+
+resetButton.addEventListener("click", event => {
+    universe = Universe.new();
+    drawGrid();
+    drawCells();
+});
+
+canvas.addEventListener("click", event => {
+    const boundingRect = canvas.getBoundingClientRect();
+
+    const scaleX = canvas.width / boundingRect.width;
+    const scaleY = canvas.height / boundingRect.height;
+
+    const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
+    const canvasTop = (event.clientY - boundingRect.top) * scaleY;
+
+    const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
+    const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
+
+    universe.toggle_cell(row, col);
+
+    drawGrid();
+    drawCells();
+});
+
+const init = () => {
+    drawGrid();
+    drawCells();
+};
+
+init();
