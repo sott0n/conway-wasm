@@ -67,6 +67,12 @@
 /******/ 					"__wbindgen_object_drop_ref": function(p0i32) {
 /******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbindgen_object_drop_ref"](p0i32);
 /******/ 					},
+/******/ 					"__wbg_time_f95106dabafc2a66": function(p0i32,p1i32) {
+/******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbg_time_f95106dabafc2a66"](p0i32,p1i32);
+/******/ 					},
+/******/ 					"__wbg_timeEnd_4cf2ddaad87faeb9": function(p0i32,p1i32) {
+/******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbg_timeEnd_4cf2ddaad87faeb9"](p0i32,p1i32);
+/******/ 					},
 /******/ 					"__wbindgen_throw": function(p0i32,p1i32) {
 /******/ 						return installedModules["../pkg/conway_wasm_bg.js"].exports["__wbindgen_throw"](p0i32,p1i32);
 /******/ 					}
@@ -171,7 +177,7 @@
 /******/ 				promises.push(installedWasmModuleData);
 /******/ 			else {
 /******/ 				var importObject = wasmImportObjects[wasmModuleId]();
-/******/ 				var req = fetch(__webpack_require__.p + "" + {"../pkg/conway_wasm_bg.wasm":"c960881c151a97096d29"}[wasmModuleId] + ".module.wasm");
+/******/ 				var req = fetch(__webpack_require__.p + "" + {"../pkg/conway_wasm_bg.wasm":"53624760bd4d47e1b02d"}[wasmModuleId] + ".module.wasm");
 /******/ 				var promise;
 /******/ 				if(importObject instanceof Promise && typeof WebAssembly.compileStreaming === 'function') {
 /******/ 					promise = Promise.all([WebAssembly.compileStreaming(req), importObject]).then(function(items) {

@@ -16,9 +16,13 @@
         align-items: center;
         justify-content: center;
       }
-      .inline{
+      .inline {
           display: inline-block;
           margin: 5px;
+      }
+      #fps {
+          white-space: pre;
+          font-family: monospace;
       }
     </style>
 
@@ -33,6 +37,7 @@
         <button id="reset" type="button" class="btn btn-sm btn-dark">Reset</button>
     </div>
     <canvas id="game-of-life-canvas"></canvas>
+    <div id="fps"></div>
     <script src="./bootstrap.js"></script>
   </body>
 </html>
